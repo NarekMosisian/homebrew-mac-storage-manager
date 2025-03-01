@@ -12,8 +12,7 @@ class MacStorageManager < Formula
     folder = "mac-storage-manager-2.0.2"
     folder = "." unless File.directory?(folder)
     cd folder do
-      rm_rf "bin" if File.exist?("bin")
-      
+      rm_r "bin" if File.exist?("bin")
       chmod 0755, "application_size_checker.sh"
       libexec.install "application_size_checker.sh"
       pkgshare.install "sounds" if File.directory?("sounds")
