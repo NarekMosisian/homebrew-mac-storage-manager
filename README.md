@@ -1,5 +1,7 @@
 # homebrew-mac-storage-manager
 
+![CI](https://github.com/NarekMosisian/homebrew-mac-storage-manager/actions/workflows/ci.yml/badge.svg)
+
 **A Homebrew tap for [Mac Storage Manager](https://github.com/NarekMosisian/mac-storage-manager) — a cross-platform shell script that helps you reclaim disk space by identifying and managing large applications on macOS and Linux.**
 
 ## Table of Contents
@@ -7,6 +9,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Updating and Uninstalling](#updating-and-uninstalling)
+- [Continuous Integration](#continuous-integration)
 - [More Information](#more-information)
 - [License](#license)
 
@@ -73,6 +76,22 @@ brew untap NarekMosisian/mac-storage-manager
 ```
 
 This removes the tool and optionally the tap itself.
+
+---
+
+## Continuous Integration
+
+This tap repository uses GitHub Actions for continuous integration. Every push and pull request to the `main` branch triggers a workflow that:
+
+- Updates Homebrew (ignoring non-critical warnings)
+- Installs dependencies (jq, newt)
+- Builds and installs the formula from source
+- Runs tests (using `brew test`)
+- Performs a strict audit of the formula
+
+You can view the current CI status using the badge at the top of this README.
+
+---
 
 ## More Information
 
