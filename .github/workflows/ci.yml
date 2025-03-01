@@ -1,0 +1,60 @@
+name: CI for Mac Storage Manager Tap
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Update Homebrew
+        run: |
+          brew update || true
+          brew doctor || true
+
+      - name: Install formula from source
+        run: |
+          # Hier davon ausgehend, dass deine Formel in Formula/mac-storage-manager.rb liegt
+          brew install --build-from-source ./Formula/mac-storage-manager.rb
+
+      - name: Run tests
+        run: |
+          brew test mac-storage-manager
+          brew audit --strict mac-storage-manager
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install Homebrew on Linux
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      - name: Update Homebrew
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew update || true
+          brew doctor || true
+
+      - name: Install formula from source
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install --build-from-source ./Formula/mac-storage-manager.rb
+
+      - name: Run tests
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew test mac-storage-manager
+          brew audit --strict mac-storage-manager
